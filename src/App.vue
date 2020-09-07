@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <HeaderComponent />
+    <HeaderComponent v-on:changeLang="changeLanguage" :languages="languages" />
     <LeftSidebar />
     <ContentComponent />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">\
@@ -9,9 +9,11 @@
 </template>
 
 <script>
+
 import HeaderComponent from './components/HeaderComponent'
 import LeftSidebar from './components/LeftSidebarComponent'
 import ContentComponent from './components/DashboardWrapperComponent'
+import { i18n } from './i18n'
 
 export default {
   name: 'App',
@@ -19,6 +21,26 @@ export default {
     HeaderComponent,
     LeftSidebar,
     ContentComponent
+  },
+  data() {
+    return {
+      languages : [
+        {
+          "key" : "vi",
+          "name" : "Tiếng Việt",
+        },
+        {
+          "key" : "en",
+          "name" : "English"
+        }
+      ],
+    }
+  },
+  methods: {
+    changeLanguage(language) {
+      localStorage.setItem('language', language);
+      i18n.locale = language
+    }
   }
 }
 </script>
