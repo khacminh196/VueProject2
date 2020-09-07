@@ -13,10 +13,8 @@
                                 <input class="form-control" type="text" placeholder="Search..">
                             </div>
                         </li>
-                        <li class="nav-item dropdown connection" v-for="(language, index) in languages" :key="index" v-on:click="handleChangeLanguage(language.key)">
-                            <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ language.name }}</a>
-                        </li>
                     </ul>
+                    <v-select class="style-chooser" v-model="selected" :options="this.locales" @input="handleChangeLocale(selected)"></v-select> 
                 </div>
             </nav>
         </div>
@@ -26,23 +24,25 @@
 <script>
 export default {
     props : {
-        languages : {
+        locales : {
             type : Array
         }
     },
     data() {
         return {
-
+            selected : ''
         }
     },
     methods: {
-        handleChangeLanguage(value) {
-            this.$emit('changeLang', value);
+        handleChangeLocale(value) {
+            this.$emit('changeLang', value)
         }
+    },
+    mounted() {
+        
     },
 }
 </script>
 
 <style>
-    
 </style>
