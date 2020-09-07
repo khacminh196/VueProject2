@@ -25,7 +25,33 @@
                 <!-- end pageheader  -->
                 <!-- ============================================================== -->
                 <div class="ecommerce-widget">
-                    
+                    <a class="btn btn-secondary ml-0" v-on:click="showFormAddUser">Add</a>
+                    <div class="d-flex flex-row">
+                        <table width="60%" height="600px" border="1px solid">
+                            <tr>
+                                <td></td>
+                                <th>Name</th>
+                                <th>Age</th>
+                                <th>Phone</th>
+                            </tr>
+                            <tr v-for="( user, index ) in users" v-bind:key="index">
+                                <td>{{ index+1 }}</td>
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.age }}</td>
+                                <td>{{ user.phone }}</td>
+                            </tr>
+                        </table>
+                        <div class="form-add-user" v-bind:style="{ display : display }">
+                            <form>
+                                <div class="form-group ml-5">
+                                    Name : <input type="text" v-model="user.name" class="form-control" placeholder="Example input">
+                                    Age : <input type="number" v-model="user.age" class="form-control" placeholder="Example input">
+                                    Phone : <input type="text" v-model="user.phone" class="form-control" placeholder="Example input">
+                                    <button type="button" v-on:click="handleAddUser()" class="btn btn-success mt-3">Add</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -34,7 +60,44 @@
 
 <script>
 export default {
-    
+    data() {
+        return {
+            display : 'none',
+            users : [],
+            user : {
+                name : '',
+                age : null,
+                phone : ''
+            }
+        }
+    },
+    created() {
+        this.getUsers();
+    },
+    mounted() {
+
+    },
+    methods : {
+        getUsers() {
+            this.users = this.$store.state.users;
+        },
+        showFormAddUser() {
+            this.display === 'block' ? this.display = 'none' : this.display = 'block'
+        },
+        handleAddUser() {
+            const newUser = {
+                name : this.user.name,
+                age : this.user.age,
+                phone : this.user.phone
+            }
+            this.$store.dispatch('addUser', newUser)
+
+            this.user.name = ''
+            this.user.age = ''
+            this.user.phone = ''
+
+        }
+    }
 }
 </script>
 
